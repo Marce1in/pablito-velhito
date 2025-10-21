@@ -109,5 +109,5 @@ def busca_todos_ausentes(estrutura, valores, nome_estrutura):
 
 if __name__ == "__main__":
 
-    arvore_teste([15, 23, 49, 10, 8, 67, 59, 9, 13, 20, 14])
+    arvore_teste([10, 5, 15, 3, 1, 20, 25, 18])
 
