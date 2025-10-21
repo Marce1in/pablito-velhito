@@ -8,12 +8,15 @@ class Node:
         self.valor = valor
         self.esquerda: Node | None = None
         self.direita: Node | None = None
+        self.altura: int = 1
 
 class Arvore:
     def __init__(self):
         self.raiz = None
 
     def inserir(self, valor):
+
+        caminho = []
         # Se a raiz não existir, criamos uma
         if self.raiz is None:
             self.raiz = Node(valor)
@@ -23,6 +26,7 @@ class Arvore:
         no_atual = self.raiz
 
         while True:
+            caminho.append(no_atual)
             # Se valor for menor que atual, olha para a esquerda do no_atual
             if valor < no_atual.valor:
                 if no_atual.esquerda is None:
@@ -64,6 +68,24 @@ class Arvore:
 
         # Valor não existe na árvore
         return False
+    
+    def obter_altura(no: Node):
+        if no:
+            return no.altura
+        return 0
+    
+    def atualizar_altura(self, no: Node):
+
+        altura_esquerda = self.obter_altura(no.esquerda)
+        altura_direita  = self.obter_altura(no.direita)
+        no.altura = 1 + max(altura_esquerda, altura_direita)
+        
+    def obter_fator_balanceamento(self, no: Node):
+        if no is None:
+            return 0
+        
+        return (self.obter_altura(no.esquerda) - self.obter_altura(no.direita))
+
 
 # Função para testar a estrutura da árvore
 def arvore_teste(valores):
