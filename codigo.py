@@ -47,7 +47,8 @@ class Arvore:
             else:
                 break
 
-        for no_ancestral in caminho.reverse():
+        caminho.reverse()
+        for no_ancestral in caminho:
             self.atualizar_altura(no_ancestral)
             fator = self.obter_fator_balanceamento(no_ancestral)
 
@@ -77,22 +78,22 @@ class Arvore:
 
         # Valor não existe na árvore
         return False
-    
-    def obter_altura(no: Node):
+
+    def obter_altura(self, no: Node | None):
         if no:
             return no.altura
         return 0
-    
+
     def atualizar_altura(self, no: Node):
 
         altura_esquerda = self.obter_altura(no.esquerda)
         altura_direita  = self.obter_altura(no.direita)
         no.altura = 1 + max(altura_esquerda, altura_direita)
-        
-    def obter_fator_balanceamento(self, no: Node):
+
+    def obter_fator_balanceamento(self, no: Node | None):
         if no is None:
             return 0
-        
+
         return (self.obter_altura(no.esquerda) - self.obter_altura(no.direita))
 
 # Função para testar a estrutura da árvore
