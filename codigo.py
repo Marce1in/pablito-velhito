@@ -47,6 +47,11 @@ class Arvore:
             else:
                 break
 
+        # print(f"Caminho antes do Reverse: {caminho}")
+        # for passo in caminho.reverse():
+        #     print(f"Passo atual: {passo}")
+
+
     def buscar(self, valor):
         no_atual = self.raiz
 
@@ -86,6 +91,19 @@ class Arvore:
         
         return (self.obter_altura(no.esquerda) - self.obter_altura(no.direita))
 
+    def rotacao_direita(self, no: Node):
+
+        # init
+        z = no
+        y = z.esquerda
+        T3 = z.direita
+
+        # executar rotações
+        y.direita = z
+        z.esquerda = T3
+
+        return y
+        
 
 # Função para testar a estrutura da árvore
 def arvore_teste(valores):
