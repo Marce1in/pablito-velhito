@@ -16,7 +16,7 @@ class Arvore:
 
     def inserir(self, valor):
 
-        caminho = []
+        caminho: list[Node] = []
         # Se a raiz não existir, criamos uma
         if self.raiz is None:
             self.raiz = Node(valor)
@@ -47,10 +47,14 @@ class Arvore:
             else:
                 break
 
-        # print(f"Caminho antes do Reverse: {caminho}")
-        # for passo in caminho.reverse():
-        #     print(f"Passo atual: {passo}")
+        for no_ancestral in caminho.reverse():
+            self.atualizar_altura(no_ancestral)
+            fator = self.obter_fator_balanceamento(no_ancestral)
 
+            if fator > 1:
+                # Precisamos decidir entre "Rotação Simples (LL) ou Dupla (LR)"
+                # Olhamos para o filho da esquerda do no_ancestral
+                pass
 
     def buscar(self, valor):
         no_atual = self.raiz
@@ -90,20 +94,6 @@ class Arvore:
             return 0
         
         return (self.obter_altura(no.esquerda) - self.obter_altura(no.direita))
-
-    def rotacao_direita(self, no: Node):
-
-        # init
-        z = no
-        y = z.esquerda
-        T3 = z.direita
-
-        # executar rotações
-        y.direita = z
-        z.esquerda = T3
-
-        return y
-        
 
 # Função para testar a estrutura da árvore
 def arvore_teste(valores):
