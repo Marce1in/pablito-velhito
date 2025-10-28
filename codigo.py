@@ -75,6 +75,18 @@ class Arvore:
                     self.rotacao_a_direta(no_atual.direita)
                     self.rotacao_a_esquerda(no_atual)
 
+            print("")
+
+            print("NO ATUAL:")
+            print(no_atual.valor)
+            print("NO ANCESTRAL")
+            print(no_ancestral.valor)
+            print("CAMINHO:")
+            for no in caminho:
+                print(f"{ no.valor }, ", end="")
+
+            print("")
+
 
     def rotacao_a_direta(self, z: Node):
         y = z.esquerda
@@ -148,6 +160,47 @@ class Arvore:
 
         return (self.obter_altura(no.esquerda) - self.obter_altura(no.direita))
 
+    def printar_arvore(self):
+        if self.raiz is None:
+            print("Árvore vazia!")
+            return
+
+        def obter_altura_no(no):
+            if no is None:
+                return 0
+            return 1 + max(obter_altura_no(no.esquerda), obter_altura_no(no.direita))
+
+        altura = obter_altura_no(self.raiz)
+
+        # Criar matriz pra representar a árvore
+        largura = 2 ** altura - 1
+        matriz = [[" " for _ in range(largura)] for _ in range(altura * 2)]
+
+        def preencher_matriz(no, linha, esquerda, direita):
+            if no is None:
+                return
+
+            meio = (esquerda + direita) // 2
+            matriz[linha][meio] = str(no.valor)
+
+            if no.esquerda:
+                # Linha de conexão
+                matriz[linha - 1][meio - 1] = "/"
+                preencher_matriz(no.esquerda, linha - 2, esquerda, meio - 1)
+
+            if no.direita:
+                # Linha de conexão
+                matriz[linha - 1][meio + 1] = "\\"
+                preencher_matriz(no.direita, linha - 2, meio + 1, direita)
+
+        # Começar da última linha (raiz no topo quando printar)
+        preencher_matriz(self.raiz, len(matriz) - 1, 0, largura - 1)
+
+        # Printar normal (de cima pra baixo, mas a raiz tá embaixo na matriz)
+        for i in range(len(matriz)):
+            linha_str = "".join(matriz[i])
+            if linha_str.strip():  # Só printa se tiver conteúdo
+                print(linha_str)
 # Função para testar a estrutura da árvore
 def arvore_teste(valores):
     print("== TESTE DE ARVORE ==")
@@ -157,6 +210,12 @@ def arvore_teste(valores):
     for valor in valores:
         arvore.inserir(valor)
     print(f"tempo construção {time.perf_counter() - inicio_arvore:.6f}\n")
+
+
+    # PRINTAR A ÁRVORE DE BAIXO PRA CIMA
+    print("\n=== ESTRUTURA DA ÁRVORE ===")
+    arvore.printar_arvore()
+    print("=" * 30 + "\n")
 
     busca_todos_presentes(arvore, valores, "árvore")
     busca_todos_ausentes(arvore, valores, "árvore")
