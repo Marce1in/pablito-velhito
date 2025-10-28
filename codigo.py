@@ -52,10 +52,9 @@ class Arvore:
             self.atualizar_altura(no_ancestral)
             fator = self.obter_fator_balanceamento(no_ancestral)
 
-            if fator > 1:
-                # Precisamos decidir entre "Rotação Simples (LL) ou Dupla (LR)"
-                # Olhamos para o filho da esquerda do no_ancestral
-                pass
+            if fator > 1 or fator < -1:
+                print("Desbalanceou meu brother")
+
 
     def buscar(self, valor):
         no_atual = self.raiz
