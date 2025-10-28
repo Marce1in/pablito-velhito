@@ -54,6 +54,9 @@ class Arvore:
 
             if fator > 1 or fator < -1:
 
+                if no_atual.esquerda is None or no_atual.direita is None:
+                    return
+
                 if no_atual.valor < no_atual.esquerda.valor:
                     pass # LL
 
@@ -69,8 +72,12 @@ class Arvore:
 
     def rotacao_a_direta(self, z: Node):
         y = z.esquerda
+
+        if y is None:
+            return
+
         T3 = y.direita
-        
+
         y.direita = z
         z.esquerda = T3
 
@@ -78,11 +85,15 @@ class Arvore:
         self.atualizar_altura(y)
 
         return y
-        
+
     def rotacao_a_esquerda(self, z: Node):
         y = z.direita
+
+        if y is None:
+            return
+
         T2 = y.esquerda
-        
+
         y.esquerda = z
         z.direita = T2
 
