@@ -56,6 +56,31 @@ class Arvore:
                 print("Desbalanceou meu brother")
 
 
+    def rotacao_a_direta(self, z: Node):
+        y = z.esquerda
+        T3 = y.direita
+        
+        y.direita = z
+        z.esquerda = T3
+
+        self.atualizar_altura(z)
+        self.atualizar_altura(y)
+
+        return y
+        
+    def rotacao_a_esquerda(self, z: Node):
+        y = z.direita
+        T2 = y.esquerda
+        
+        y.esquerda = z
+        z.direita = T2
+
+        self.atualizar_altura(z)
+        self.atualizar_altura(y)
+
+        return y
+
+
     def buscar(self, valor):
         no_atual = self.raiz
 
