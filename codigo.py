@@ -58,16 +58,22 @@ class Arvore:
                     return
 
                 if no_atual.valor < no_atual.esquerda.valor:
-                    pass # LL
+                    #  LL
+                    self.rotacao_a_esquerda(no_atual)
 
                 if no_atual.valor > no_atual.esquerda.valor:
-                    pass # LR
+                    # LR
+                    self.rotacao_a_esquerda(no_atual.esquerda)
+                    self.rotacao_a_direta(no_atual)
 
                 if no_atual.valor > no_atual.direita.valor:
-                    pass # RR
+                    # RR
+                    self.rotacao_a_direta(no_atual)
 
                 if no_atual.valor < no_atual.direita.valor:
-                    pass # RL
+                    # RL
+                    self.rotacao_a_direta(no_atual.direita)
+                    self.rotacao_a_esquerda(no_atual)
 
 
     def rotacao_a_direta(self, z: Node):
