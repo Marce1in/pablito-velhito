@@ -53,7 +53,18 @@ class Arvore:
             fator = self.obter_fator_balanceamento(no_ancestral)
 
             if fator > 1 or fator < -1:
-                print("Desbalanceou meu brother")
+
+                if no_atual.valor < no_atual.esquerda.valor:
+                    pass # LL
+
+                if no_atual.valor > no_atual.esquerda.valor:
+                    pass # LR
+
+                if no_atual.valor > no_atual.direita.valor:
+                    pass # RR
+
+                if no_atual.valor < no_atual.direita.valor:
+                    pass # RL
 
 
     def rotacao_a_direta(self, z: Node):
