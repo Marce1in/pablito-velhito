@@ -24,13 +24,14 @@ class Arvore:
 
         # Se existir uma raiz, o nó atual recebe o valor da raiz
         no_atual = self.raiz
+        no_novo = Node(valor)
 
         while True:
             caminho.append(no_atual)
             # Se valor for menor que atual, olha para a esquerda do no_atual
             if valor < no_atual.valor:
                 if no_atual.esquerda is None:
-                    no_atual.esquerda = Node(valor)
+                    no_atual.esquerda = no_novo
                     break
                 else:
                     no_atual = no_atual.esquerda
@@ -38,7 +39,7 @@ class Arvore:
             # Se valor for maior que atual, olha para a direita do no_atual
             elif valor > no_atual.valor:
                 if no_atual.direita is None:
-                    no_atual.direita = Node(valor)
+                    no_atual.direita = no_novo
                     break
                 else:
                     no_atual = no_atual.direita
@@ -52,42 +53,40 @@ class Arvore:
             self.atualizar_altura(no_ancestral)
             fator = self.obter_fator_balanceamento(no_ancestral)
 
-            if fator > 1 or fator < -1:
-
-                if no_atual.esquerda is None or no_atual.direita is None:
-                    return
-
-                if no_atual.valor < no_atual.esquerda.valor:
+            if fator > 1:
+                if valor < no_ancestral.esquerda.valor:
                     #  LL
-                    self.rotacao_a_esquerda(no_atual)
+                    self.rotacao_a_esquerda(no_ancestral)
 
-                if no_atual.valor > no_atual.esquerda.valor:
+                if valor > no_ancestral.esquerda.valor:
                     # LR
-                    self.rotacao_a_esquerda(no_atual.esquerda)
-                    self.rotacao_a_direta(no_atual)
+                    self.rotacao_a_esquerda(no_ancestral.esquerda)
+                    self.rotacao_a_direta(no_ancestral)
 
-                if no_atual.valor > no_atual.direita.valor:
+            if fator < -1:
+
+                if valor > no_ancestral.direita.valor:
                     # RR
-                    self.rotacao_a_direta(no_atual)
+                    self.rotacao_a_direta(no_ancestral)
 
-                if no_atual.valor < no_atual.direita.valor:
+                if valor < no_ancestral.direita.valor:
                     # RL
-                    self.rotacao_a_direta(no_atual.direita)
-                    self.rotacao_a_esquerda(no_atual)
+                    self.rotacao_a_direta(no_ancestral.direita)
+                    self.rotacao_a_esquerda(no_ancestral)
 
-            print("")
-
-            print("NO ATUAL:")
-            print(no_atual.valor)
-            print("NO ANCESTRAL")
-            print(no_ancestral.valor)
-            print("CAMINHO:")
-            for no in caminho:
-                print(f"{ no.valor }, ", end="")
-
-            print("")
-
-
+            # print("")
+            #
+            # print("NO ATUAL:")
+            # print(no_atual.valor)
+            # print("NO ANCESTRAL")
+            # print(no_ancestral.valor)
+            # print("CAMINHO:")
+            # for no in caminho:
+            #     print(f"{ no.valor }, ", end="")
+            #
+            # print("")
+            #
+            #
     def rotacao_a_direta(self, z: Node):
         y = z.esquerda
 
@@ -201,6 +200,7 @@ class Arvore:
             linha_str = "".join(matriz[i])
             if linha_str.strip():  # Só printa se tiver conteúdo
                 print(linha_str)
+
 # Função para testar a estrutura da árvore
 def arvore_teste(valores):
     print("== TESTE DE ARVORE ==")
